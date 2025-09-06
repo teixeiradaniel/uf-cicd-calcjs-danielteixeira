@@ -21,3 +21,6 @@ jobs:
       # Passo 3: Instalar dependências do projeto
       - name: Install dependencies
         run: npm install
+      # Passo 4: Rodar os testes unitários
+      - name: Run tests
+        run: npm test
