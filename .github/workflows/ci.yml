@@ -1,0 +1,15 @@
+name: CI Pipeline
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Passo 1: Fazer checkout do código
+      - name: Check out the repository
+        uses: actions/checkout@v3
