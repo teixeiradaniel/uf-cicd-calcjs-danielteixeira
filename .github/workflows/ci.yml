@@ -37,3 +37,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
+      # Passo 3: Autenticar no NPM
+      - name: Authenticate to npm
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+      # Passo 4: Publicar no npm, se a versão tiver sido incrementada
+      - name: Publish to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
