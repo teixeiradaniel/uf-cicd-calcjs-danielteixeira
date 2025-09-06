@@ -13,9 +13,15 @@ function multiply(a, b) {
     return a * b;
 }
 
+// Função de potenciação
+function power(base, exponent) {
+    return Math.pow(base, exponent);
+}
+
 // Exportar as funções
 module.exports = {
     add,
     subtract,
-    multiply
+    multiply,
+    power
 };
