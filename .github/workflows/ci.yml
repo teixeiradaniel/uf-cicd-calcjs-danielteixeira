@@ -1,0 +1,47 @@
+name: CI Pipeline
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Passo 1: Fazer checkout do código
+      - name: Check out the repository
+        uses: actions/checkout@v3
+      # Passo 2: Instalar o Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+      # Passo 3: Instalar dependências do projeto
+      - name: Install dependencies
+        run: npm install
+      # Passo 4: Rodar os testes unitários
+      - name: Run tests
+        run: npm test
+  publish:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      # Passo 1: Fazer checkout do código
+      - name: Check out the repository
+        uses: actions/checkout@v3
+      # Passo 2: Instalar o Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+      # Passo 3: Autenticar no NPM
+      - name: Authenticate to npm
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+      # Passo 4: Publicar no npm, se a versão tiver sido incrementada
+      - name: Publish to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
