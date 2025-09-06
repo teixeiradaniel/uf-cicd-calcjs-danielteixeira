@@ -32,3 +32,8 @@ jobs:
       # Passo 1: Fazer checkout do código
       - name: Check out the repository
         uses: actions/checkout@v3
+      # Passo 2: Instalar o Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
